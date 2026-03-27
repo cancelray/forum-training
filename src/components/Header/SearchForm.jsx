@@ -1,69 +1,38 @@
 import { useContext } from 'react';
+
 import { PostsContext } from '../../context/PostsContext';
-import Button from '../Button';
+
+import Button from '../UI/Button';
 
 const SearchForm = () => {
-	const {
-		posts,
-		searchInPosts,
-		setSearchInPosts,
-		searchPostsArr,
-		setSearchPostsArr,
-		prevSearch,
-		setPrevSearch,
-		searchIndex,
-		setSearchIndex,
-	} = useContext(PostsContext);
-
-	const searchFunc = (event) => {
-		event.preventDefault();
-
-		if (!searchInPosts) {
-			setSearchPostsArr([]);
-			setSearchIndex(0);
-			alert('Nothing to search');
-			return;
-		}
-
-		const targetPosts = posts.filter(({ postContent }) =>
-			postContent.toLowerCase().includes(searchInPosts.toLowerCase()),
-		);
-
-		if (targetPosts.length === 0) {
-			setSearchPostsArr([]);
-			setSearchIndex(0);
-			alert('No search result');
-			return;
-		}
-
-		if (prevSearch !== searchInPosts) {
-			setPrevSearch(searchInPosts);
-			setSearchPostsArr(targetPosts);
-			setSearchIndex(0);
-			return;
-		}
-
-		searchIndex === searchPostsArr.length - 1
-			? setSearchIndex(0)
-			: setSearchIndex(searchIndex + 1);
-	};
+	const { error, onChange, searchInPosts, searchFunc } =
+		useContext(PostsContext);
 
 	return (
 		<form
 			className='search-box'
 			onSubmit={searchFunc}
 		>
-			<input
-				type='search'
-				className='search-input'
-				placeholder='Search'
-				value={searchInPosts}
-				onChange={(event) => {
-					setSearchInPosts(event.target.value);
-				}}
-			/>
+			<div className='search-field'>
+				<input
+					id='search-input'
+					type='search'
+					className={`search-input ${error.target === 'search-input' ? 'not-valid' : ''}`}
+					placeholder='Search'
+					value={searchInPosts}
+					onChange={onChange}
+				/>
+				{error.target === 'search-input' && (
+					<span className='error'>{error.error}</span>
+				)}
+			</div>
 
-			<Button type='submit'>Search</Button>
+			<Button
+				type='submit'
+				isDisabled={searchInPosts.trim().length === 0}
+			>
+				Search
+			</Button>
 		</form>
 	);
 };

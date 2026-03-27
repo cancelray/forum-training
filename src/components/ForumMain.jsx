@@ -1,64 +1,52 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import usePostsSearch from '../hooks/usePostsSearch';
 
 import Header from './Header/Header';
 import PostForm from './PostForm/PostForm';
 import PostArea from './Posts/PostArea';
 
 import { PostsContext } from '../context/PostsContext';
-import loadPosts from './Posts/LoadPosts';
+import useInputOnChange from '../hooks/useInputOnChange';
+import usePosts from '../hooks/usePosts';
 
 const ForumMain = () => {
-	const [posts, setPosts] = useState(loadPosts());
-	const [postAuthor, setPostAuthor] = useState('');
-	const [postContent, setPostContent] = useState('');
-	const [searchInPosts, setSearchInPosts] = useState('');
-	const [prevSearch, setPrevSearch] = useState('');
-	const [searchPostsArr, setSearchPostsArr] = useState([]);
-	const [searchIndex, setSearchIndex] = useState(-1);
-	const [newId, setNewId] = useState(null);
+	const [error, setError] = useState({ target: null, error: '' });
 
 	const postRefs = useRef({});
 
-	useEffect(() => {
-		localStorage.setItem('posts', JSON.stringify(posts));
-	}, [posts]);
+	const {
+		posts,
+		addPost,
+		postAuthor,
+		setPostAuthor,
+		postContent,
+		setPostContent,
+	} = usePosts(postRefs);
 
-	useEffect(() => {
-		if (newId) {
-			postRefs.current[newId].scrollIntoView({
-				behavior: 'smooth',
-			});
-		}
-	}, [newId]);
+	const { searchInPosts, setSearchInPosts, searchFunc } = usePostsSearch(
+		posts,
+		postRefs,
+	);
 
-	useEffect(() => {
-		if (searchPostsArr.length > 0) {
-			const targetPostId = searchPostsArr[searchIndex].id;
-			postRefs.current[targetPostId].scrollIntoView({
-				behavior: 'smooth',
-			});
-		}
-	}, [searchPostsArr, searchIndex]);
+	const { onChange } = useInputOnChange(
+		setPostAuthor,
+		setPostContent,
+		setSearchInPosts,
+		setError,
+	);
 
 	return (
 		<PostsContext.Provider
 			value={{
 				posts,
-				setPosts,
+				addPost,
 				postAuthor,
-				setPostAuthor,
 				postContent,
-				setPostContent,
 				searchInPosts,
-				setSearchInPosts,
 				postRefs,
-				setNewId,
-				searchPostsArr,
-				setSearchPostsArr,
-				prevSearch,
-				setPrevSearch,
-				searchIndex,
-				setSearchIndex,
+				error,
+				onChange,
+				searchFunc,
 			}}
 		>
 			<Header />

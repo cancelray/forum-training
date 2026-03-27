@@ -1,0 +1,16 @@
+button {
+	padding: 10px;
+	border: none;
+	background: #333;
+	color: white;
+	cursor: pointer;
+	border-radius: 4px;
+}
+button:hover {
+	background: #555;
+}
+button:disabled {
+	background-color: grey;
+	border-color: grey;
+	cursor: not-allowed;
+}

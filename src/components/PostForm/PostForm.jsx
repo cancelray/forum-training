@@ -1,67 +1,54 @@
 import { useContext } from 'react';
 
 import { PostsContext } from '../../context/PostsContext';
-import Button from '../Button';
+import Button from '../UI/Button';
 
 const PostForm = () => {
-	const {
-		setPosts,
-		postAuthor,
-		setPostAuthor,
-		postContent,
-		setPostContent,
-		setNewId,
-	} = useContext(PostsContext);
-
-	const addPost = (event) => {
-		event.preventDefault();
-
-		const currentDate = new Date().toLocaleString();
-
-		if (postAuthor.trim().length > 0 && postContent.trim().length > 0) {
-			const newPost = {
-				id: crypto?.randomUUID() ?? Date.now().toString(),
-				postAuthor: postAuthor,
-				postDate: currentDate,
-				postContent: postContent,
-			};
-
-			setPosts((prevPosts) => [...prevPosts, newPost]);
-
-			setNewId(newPost.id);
-
-			setPostAuthor('');
-			setPostContent('');
-		} else if (postAuthor.trim().length === 0) {
-			alert('Need enter name');
-		} else if (postContent.trim().length === 0) {
-			alert('Need enter message');
-		}
-	};
+	const { addPost, postAuthor, postContent, error, onChange } =
+		useContext(PostsContext);
 
 	return (
 		<form
 			className='post-form'
 			onSubmit={addPost}
 		>
-			<input
-				type='text'
-				className='author-input'
-				placeholder='Your name'
-				value={postAuthor}
-				onChange={(event) => {
-					setPostAuthor(event.target.value);
-				}}
-			/>
-			<textarea
-				className='post-input'
-				placeholder='Write a message...'
-				value={postContent}
-				onChange={(event) => {
-					setPostContent(event.target.value);
-				}}
-			/>
-			<Button type='submit'>Post</Button>
+			<div className='field'>
+				{' '}
+				<input
+					id='author-input'
+					type='text'
+					className={`author-input ${error.target === 'author-input' ? 'not-valid' : ''}`}
+					placeholder='Your name'
+					value={postAuthor}
+					onChange={onChange}
+				/>
+				{error.target === 'author-input' && (
+					<span className='error'>{error.error}</span>
+				)}
+			</div>
+
+			<div className='field'>
+				{' '}
+				<textarea
+					id='post-input'
+					className={`post-input ${error.target === 'post-input' ? 'not-valid' : ''}`}
+					placeholder='Write a message...'
+					value={postContent}
+					onChange={onChange}
+				/>
+				{error.target === 'post-input' && (
+					<span className='error'>{error.error}</span>
+				)}
+			</div>
+
+			<Button
+				type='submit'
+				isDisabled={
+					postAuthor.trim().length === 0 || postContent.trim().length === 0
+				}
+			>
+				Post
+			</Button>
 		</form>
 	);
 };
