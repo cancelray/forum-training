@@ -38,6 +38,7 @@ const usePosts = (postRefs) => {
 				behavior: 'smooth',
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [newId]);
 
 	return {

@@ -46,6 +46,7 @@ const usePostsSearch = (posts, postRefs) => {
 				behavior: 'smooth',
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchPostsArr, searchIndex]);
 
 	return {
