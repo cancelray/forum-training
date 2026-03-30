@@ -4,8 +4,14 @@ import { PostsContext } from '../../context/PostsContext';
 import Button from '../UI/Button';
 
 const PostForm = () => {
-	const { addPost, postAuthor, postContent, error, onChange } =
-		useContext(PostsContext);
+	const {
+		addPost,
+		postAuthor,
+		postContent,
+		error,
+		onChange,
+		inputTextareaRef,
+	} = useContext(PostsContext);
 
 	return (
 		<form
@@ -13,7 +19,6 @@ const PostForm = () => {
 			onSubmit={addPost}
 		>
 			<div className='field'>
-				{' '}
 				<input
 					id='author-input'
 					type='text'
@@ -33,6 +38,7 @@ const PostForm = () => {
 					id='post-input'
 					className={`post-input ${error.target === 'post-input' ? 'not-valid' : ''}`}
 					placeholder='Write a message...'
+					ref={inputTextareaRef}
 					value={postContent}
 					onChange={onChange}
 				/>

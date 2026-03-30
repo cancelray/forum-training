@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 
 const Post = forwardRef((props, ref) => {
-	const { postAuthor, postDate, postContent } = props;
+	const { postAuthor, postDate, postContent, nicknameClick } = props;
 
 	return (
 		<div
@@ -9,12 +9,12 @@ const Post = forwardRef((props, ref) => {
 			ref={ref}
 		>
 			<div className='post-head'>
-				<a
-					href='#'
+				<p
+					onClick={nicknameClick}
 					className='post-author'
 				>
 					{postAuthor}
-				</a>
+				</p>
 				<div className='post-date'>{postDate}</div>
 			</div>
 			<div className='post-content'>{postContent}</div>

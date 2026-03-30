@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import loadPosts from '../components/Posts/loadPosts';
 
@@ -7,6 +7,8 @@ const usePosts = (postRefs) => {
 	const [postAuthor, setPostAuthor] = useState('');
 	const [postContent, setPostContent] = useState('');
 	const [newId, setNewId] = useState(null);
+
+	const inputTextareaRef = useRef(null);
 
 	const addPost = (event) => {
 		event.preventDefault();
@@ -26,6 +28,16 @@ const usePosts = (postRefs) => {
 
 		setPostAuthor('');
 		setPostContent('');
+	};
+
+	const nicknameClick = (event) => {
+		const targetNickname = event.target.textContent;
+		setPostContent((prev) => targetNickname + ', ' + prev);
+
+		inputTextareaRef.current.scrollIntoView({
+			behavior: 'smooth',
+		});
+		inputTextareaRef.current.focus();
 	};
 
 	useEffect(() => {
@@ -48,6 +60,8 @@ const usePosts = (postRefs) => {
 		setPostAuthor,
 		postContent,
 		setPostContent,
+		inputTextareaRef,
+		nicknameClick,
 	};
 };
 

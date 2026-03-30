@@ -7,7 +7,7 @@ const Header = () => {
 				href='/'
 				className='icon'
 			>
-				FORUM
+				<img className='img-icon' src="../../../public/forum.png" alt="forum" />
 			</a>
 			<SearchForm />
 		</header>

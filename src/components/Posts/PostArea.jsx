@@ -5,7 +5,7 @@ import { PostsContext } from '../../context/PostsContext';
 import Post from './Post';
 
 const PostArea = () => {
-	const { posts, postRefs } = useContext(PostsContext);
+	const { posts, postRefs, nicknameClick } = useContext(PostsContext);
 
 	return (
 		<div className='post-area'>
@@ -21,6 +21,7 @@ const PostArea = () => {
 					postAuthor={post.postAuthor}
 					postDate={post.postDate}
 					postContent={post.postContent}
+					nicknameClick={nicknameClick}
 				/>
 			))}
 		</div>

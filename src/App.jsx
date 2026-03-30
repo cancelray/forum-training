@@ -19,6 +19,8 @@ function App() {
 		setPostAuthor,
 		postContent,
 		setPostContent,
+		inputTextareaRef,
+		nicknameClick,
 	} = usePosts(postRefs);
 
 	const { searchInPosts, setSearchInPosts, searchFunc } = usePostsSearch(
@@ -45,9 +47,10 @@ function App() {
 				error,
 				onChange,
 				searchFunc,
+				inputTextareaRef,
+				nicknameClick,
 			}}
 		>
-			{' '}
 			<ForumMain />
 		</PostsContext.Provider>
 	);
