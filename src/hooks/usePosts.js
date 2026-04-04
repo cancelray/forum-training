@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-import loadPosts from '../components/Posts/loadPosts';
+import postsAPI from '../api/postsAPI';
 
 const usePosts = (postRefs) => {
-	const [posts, setPosts] = useState(loadPosts());
+	const [posts, setPosts] = useState([]);
 	const [postAuthor, setPostAuthor] = useState('');
 	const [postContent, setPostContent] = useState('');
 	const [newId, setNewId] = useState(null);
@@ -22,12 +22,14 @@ const usePosts = (postRefs) => {
 			postContent: postContent,
 		};
 
-		setPosts((prevPosts) => [...prevPosts, newPost]);
+		postsAPI.add(newPost).then((addedPost) => {
+			setPosts((prevPosts) => [...prevPosts, addedPost]);
 
-		setNewId(newPost.id);
+			setNewId(addedPost.id);
 
-		setPostAuthor('');
-		setPostContent('');
+			setPostAuthor('');
+			setPostContent('');
+		});
 	};
 
 	const nicknameClick = (event) => {
@@ -52,6 +54,10 @@ const usePosts = (postRefs) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [newId]);
+
+	useEffect(() => {
+		postsAPI.getPosts().then(setPosts);
+	}, []);
 
 	return {
 		posts,
