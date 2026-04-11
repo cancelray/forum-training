@@ -3,7 +3,7 @@ import useInputOnChange from './hooks/useInputOnChange';
 import usePosts from './hooks/usePosts';
 import usePostsSearch from './hooks/usePostsSearch';
 
-import ForumMain from './components/ForumMain';
+import ForumMain from './components/ForumMain/ForumMain';
 
 import { PostsContext } from './context/PostsContext';
 

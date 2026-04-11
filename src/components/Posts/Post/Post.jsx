@@ -1,23 +1,25 @@
 import { forwardRef } from 'react';
 
+import styles from './Post.module.css';
+
 const Post = forwardRef((props, ref) => {
 	const { postAuthor, postDate, postContent, nicknameClick } = props;
 
 	return (
 		<div
-			className='post'
+			className={styles.post}
 			ref={ref}
 		>
-			<div className='post-head'>
+			<div className={styles.head}>
 				<p
 					onClick={nicknameClick}
-					className='post-author'
+					className={styles.author}
 				>
 					{postAuthor}
 				</p>
-				<div className='post-date'>{postDate}</div>
+				<div className={styles.date}>{postDate}</div>
 			</div>
-			<div className='post-content'>{postContent}</div>
+			<div className={styles.conten}>{postContent}</div>
 		</div>
 	);
 });

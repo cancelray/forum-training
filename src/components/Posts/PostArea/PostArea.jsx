@@ -1,14 +1,16 @@
 import { useContext } from 'react';
 
-import { PostsContext } from '../../context/PostsContext';
+import { PostsContext } from '../../../context/PostsContext';
 
-import Post from './Post';
+import Post from '../Post/Post';
+
+import styles from './PostArea.module.css';
 
 const PostArea = () => {
 	const { posts, postRefs, nicknameClick } = useContext(PostsContext);
 
 	return (
-		<div className='post-area'>
+		<div className={styles.postArea}>
 			{posts?.map((post) => (
 				<Post
 					key={post.id}

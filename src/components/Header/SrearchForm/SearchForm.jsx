@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 
-import { PostsContext } from '../../context/PostsContext';
+import { PostsContext } from '../../../context/PostsContext';
 
-import Button from '../UI/Button';
+import Button from '../../UI/Button/Button';
+
+import styles from './SearchForm.module.css';
 
 const SearchForm = () => {
 	const { error, onChange, searchInPosts, searchFunc } =
@@ -10,14 +12,16 @@ const SearchForm = () => {
 
 	return (
 		<form
-			className='search-box'
+			className={styles.searchBox}
 			onSubmit={searchFunc}
 		>
-			<div className='search-field'>
+			<div className={styles.field}>
 				<input
 					id='search-input'
 					type='search'
-					className={`search-input ${error.target === 'search-input' ? 'not-valid' : ''}`}
+					className={`
+						${styles.input} 
+						${error.target === 'search-input' ? styles.notValid : ''}`}
 					placeholder='Search'
 					value={searchInPosts}
 					onChange={onChange}

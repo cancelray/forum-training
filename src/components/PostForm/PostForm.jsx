@@ -1,7 +1,9 @@
 import { useContext } from 'react';
 
 import { PostsContext } from '../../context/PostsContext';
-import Button from '../UI/Button';
+import Button from '../UI/Button/Button';
+
+import styles from './PostForm.module.css';
 
 const PostForm = () => {
 	const {
@@ -15,14 +17,16 @@ const PostForm = () => {
 
 	return (
 		<form
-			className='post-form'
+			className={styles.postForm}
 			onSubmit={addPost}
 		>
-			<div className='field'>
+			<div className={styles.field}>
 				<input
 					id='author-input'
 					type='text'
-					className={`author-input ${error.target === 'author-input' ? 'not-valid' : ''}`}
+					className={`
+						${styles.authorInput} 
+						${error.target === 'author-input' ? styles.notValid : ''}`}
 					placeholder='Your name'
 					value={postAuthor}
 					onChange={onChange}
@@ -32,11 +36,12 @@ const PostForm = () => {
 				)}
 			</div>
 
-			<div className='field'>
-				{' '}
+			<div className={styles.field}>
 				<textarea
 					id='post-input'
-					className={`post-input ${error.target === 'post-input' ? 'not-valid' : ''}`}
+					className={`
+						${styles.postInput} 
+						${error.target === 'post-input' ? styles.notValid : ''}`}
 					placeholder='Write a message...'
 					ref={inputTextareaRef}
 					value={postContent}
